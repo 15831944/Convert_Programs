@@ -143,5 +143,32 @@ namespace Convert_Programs.Properties {
                 this["devEmail"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DDX PowerCam LAX file|*.lax")]
+        public string filter {
+            get {
+                return ((string)(this["filter"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".lax")]
+        public string ext {
+            get {
+                return ((string)(this["ext"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Q:\\")]
+        public string initDir {
+            get {
+                return ((string)(this["initDir"]));
+            }
+        }
     }
 }

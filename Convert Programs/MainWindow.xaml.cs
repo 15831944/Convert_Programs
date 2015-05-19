@@ -133,10 +133,10 @@ namespace Convert_Programs
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-            dlg.DefaultExt = ".lax";
-            dlg.Filter = "DDX PowerCam LAX file|*.lax";
+            dlg.DefaultExt = Properties.Settings.Default.ext;
+            dlg.Filter = Properties.Settings.Default.filter;
             dlg.Multiselect = true;
-            dlg.InitialDirectory = @"Q:\";
+            dlg.InitialDirectory = Properties.Settings.Default.initDir;
             if (Properties.Settings.Default.lastDir != null)
             {
                 dlg.InitialDirectory = Properties.Settings.Default.lastDir;
