@@ -146,6 +146,7 @@ namespace Convert_Programs
             {
                 this.ConvertProgram(item, this.cbxMachines.SelectedItem.ToString());
             }
+            this.lblStatus.Content = string.Format("Converted programs to {0}.", this.cbxMachines.SelectedItem.ToString());
         }
 
         private void lbBatch_MouseDown(object sender, MouseButtonEventArgs e)
