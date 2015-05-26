@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Convert_ProgramsException.cs" />
     <Compile Include="ErrMsg.xaml.cs">
       <DependentUpon>ErrMsg.xaml</DependentUpon>
     </Compile>

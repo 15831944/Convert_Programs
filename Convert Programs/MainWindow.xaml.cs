@@ -121,6 +121,25 @@ namespace Convert_Programs
             }
         }
 
+        private void AddItem(string item)
+        {
+            try
+            {
+                if (!this.lbBatch.Items.Contains(item))
+                    this.lbBatch.Items.Add(item);
+            }
+            catch (ArgumentNullException ane)
+            {
+                ErrMsg em = new ErrMsg(new Convert_ProgramsException("ArgumentNullException", ane));
+                em.ShowDialog();
+            }
+            catch (SystemException se)
+            {
+                ErrMsg em = new ErrMsg(new Convert_ProgramsException("SystemException", se));
+                em.ShowDialog();
+            }
+        }
+
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
             foreach (string item in this.lbBatch.Items)
@@ -148,20 +167,7 @@ namespace Convert_Programs
             {
                 foreach (string item in dlg.FileNames)
                 {
-                    try
-                    {
-                        this.lbBatch.Items.Add(item);
-                    }
-                    catch (ArgumentNullException ane)
-                    {
-                        ErrMsg em = new ErrMsg(ane);
-                        em.ShowDialog();
-                    }
-                    catch (SystemException se)
-                    {
-                        ErrMsg em = new ErrMsg(se);
-                        em.ShowDialog();
-                    }
+                    this.AddItem(item);
                     System.IO.FileInfo fi = new FileInfo(item);
                     Properties.Settings.Default.lastDir = fi.DirectoryName;
                 }
@@ -173,6 +179,42 @@ namespace Convert_Programs
             Properties.Settings.Default.Top = this.Top;
             Properties.Settings.Default.Left = this.Left;
             Properties.Settings.Default.Save();
+        }
+
+        private void mainGrid_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] f = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+                foreach (string s in f)
+                {
+                    this.AddItem(s);
+                }
+            }
+        }
+
+        private void lbBatch_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Delete:
+                    deleteSelected();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void deleteSelected()
+        {
+            while (lbBatch.SelectedItems.Count > 0)
+                this.lbBatch.Items.Remove(this.lbBatch.SelectedItem);
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            while (this.lbBatch.Items.Count > 0)
+                this.lbBatch.Items.RemoveAt(0);
         }
     }
 }
