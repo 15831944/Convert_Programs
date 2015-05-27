@@ -125,7 +125,7 @@ namespace Convert_Programs
         {
             try
             {
-                if (!this.lbBatch.Items.Contains(item))
+                if (!this.lbBatch.Items.Contains(item) && item.ToUpper().EndsWith(@".LAX"))
                     this.lbBatch.Items.Add(item);
             }
             catch (ArgumentNullException ane)
