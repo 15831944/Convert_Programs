@@ -20,7 +20,12 @@ namespace Convert_Programs {
   /// Interaction logic for MainWindow.xaml
   /// </summary>
   public partial class MainWindow : Window {
+    const int THISFUNCTION = 9;
+
     public MainWindow() {
+      ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter ta = new ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter();
+      int uid = (int)ta.GetUIDByUsername(Environment.UserName);
+      ENGINEERINGDataSet.IncrementOdometer(THISFUNCTION, uid);
       InitializeComponent();
       this.Top = Properties.Settings.Default.Top;
       this.Left = Properties.Settings.Default.Left;
