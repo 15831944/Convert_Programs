@@ -23,9 +23,6 @@ namespace Convert_Programs {
     const int THISFUNCTION = 9;
 
     public MainWindow() {
-      ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter ta = new ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter();
-      int uid = (int)ta.GetUIDByUsername(Environment.UserName);
-      ENGINEERINGDataSet.IncrementOdometer(THISFUNCTION, uid);
       InitializeComponent();
       this.Top = Properties.Settings.Default.Top;
       this.Left = Properties.Settings.Default.Left;
@@ -112,7 +109,11 @@ namespace Convert_Programs {
       }
     }
 
-    private void btnGo_Click(object sender, RoutedEventArgs e) {
+		private void btnGo_Click(object sender, RoutedEventArgs e) {
+			using (ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter ta = new ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter()) {
+				int uid = (int)ta.GetUIDByUsername(Environment.UserName);
+				ENGINEERINGDataSet.IncrementOdometer(THISFUNCTION, uid);
+			}
       foreach (string item in this.lbBatch.Items) {
         this.ConvertProgram(item, this.cbxMachines.SelectedItem.ToString());
       }
