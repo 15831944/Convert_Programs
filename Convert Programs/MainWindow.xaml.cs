@@ -35,11 +35,9 @@ namespace Convert_Programs {
         try {
           this.cbxMachines.Items.Add(m);
         } catch (ArgumentNullException ane) {
-          ErrMsg em = new ErrMsg(ane);
-          em.ShowDialog();
+					ENGINEERINGDataSet.ProcessError(ane);
         } catch (SystemException se) {
-          ErrMsg em = new ErrMsg(se);
-          em.ShowDialog();
+					ENGINEERINGDataSet.ProcessError(se);
         }
       }
     }
@@ -54,11 +52,9 @@ namespace Convert_Programs {
         try {
           text = sr.ReadToEnd();
         } catch (OutOfMemoryException oome) {
-          ErrMsg em = new ErrMsg(oome);
-          em.ShowDialog();
+					ENGINEERINGDataSet.ProcessError(oome);
         } catch (IOException ioe) {
-          ErrMsg em = new ErrMsg(ioe);
-          em.ShowDialog();
+					ENGINEERINGDataSet.ProcessError(ioe);
         }
 
         sb.Append(text);
@@ -84,14 +80,11 @@ namespace Convert_Programs {
         try {
           sw.Write(sb.ToString());
         } catch (ObjectDisposedException ode) {
-          ErrMsg em = new ErrMsg(ode);
-          em.ShowDialog();
+					ENGINEERINGDataSet.ProcessError(ode);
         } catch (NotSupportedException nse) {
-          ErrMsg em = new ErrMsg(nse);
-          em.ShowDialog();
+					ENGINEERINGDataSet.ProcessError(nse);
         } catch (IOException ioe) {
-          ErrMsg em = new ErrMsg(ioe);
-          em.ShowDialog();
+					ENGINEERINGDataSet.ProcessError(ioe);
         }
       }
     }
@@ -101,15 +94,17 @@ namespace Convert_Programs {
         if (!this.lbBatch.Items.Contains(item) && item.ToUpper().EndsWith(@".LAX"))
           this.lbBatch.Items.Add(item);
       } catch (ArgumentNullException ane) {
-        ErrMsg em = new ErrMsg(new Convert_ProgramsException("ArgumentNullException", ane));
-        em.ShowDialog();
+				ENGINEERINGDataSet.ProcessError(ane);
       } catch (SystemException se) {
-        ErrMsg em = new ErrMsg(new Convert_ProgramsException("SystemException", se));
-        em.ShowDialog();
+				ENGINEERINGDataSet.ProcessError(se);
       }
     }
 
 		private void btnGo_Click(object sender, RoutedEventArgs e) {
+			if (cbxMachines.SelectedItem == null) {
+				MessageBox.Show(@"You need to choose what machine we're converting to.", @"?", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+				return;
+			}
 			using (ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter ta = new ENGINEERINGDataSetTableAdapters.GEN_USERSTableAdapter()) {
 				int uid = (int)ta.GetUIDByUsername(Environment.UserName);
 				ENGINEERINGDataSet.IncrementOdometer(THISFUNCTION, uid);
